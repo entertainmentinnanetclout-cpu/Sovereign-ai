@@ -12,6 +12,10 @@ app = FastAPI(title="Sovereign AI", version="1.0.0")
 def health():
     return {"ok": True}
 
+@app.get("/")
+def root():
+    return {"ok": True, "service": "Sovereign AI Core", "health": "/health"}
+
 @app.post("/v1/proposals/generate", response_model=ProposalGenerateOut, dependencies=[Depends(require_internal_key)])
 def proposals_generate(payload: ProposalGenerateIn):
     # In production: pass identity/client from Supabase via Edge
